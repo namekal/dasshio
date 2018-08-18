@@ -37,4 +37,5 @@ LABEL \
     org.label-schema.vendor="Dash Hass.io Add-on"
 
 RUN chmod a+x /dasshio.py
+RUN mv /usr/sbin/tcpdump /usr/bin/local/tcpdump
 ENTRYPOINT ["python3", "/dasshio.py"]
