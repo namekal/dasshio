@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import datetime
 import json
 import logging
 import os
@@ -10,6 +9,7 @@ import signal
 import sys
 import time
 
+from datetime import datetime
 from scapy.all import ARP
 from scapy.all import DHCP
 from scapy.all import Ether
@@ -31,7 +31,7 @@ def arp_display(pkt):
     mac = ""
     current_time = datetime.utcnow()
     button_timeout = int(config["timeout"]) if "timeout" in config else 10
-    request_timeout_secs = config["request_timeout_secs"] if "reuqest_timeout_secs" in config else 0.5
+    request_timeout_secs = int(config["request_timeout_secs"]) if "request_timeout_secs" in config else 2
 
     try:
         mac = pkt[ARP].hwsrc.lower()
@@ -41,14 +41,6 @@ def arp_display(pkt):
     for button in config["buttons"]:
         button_address = button["address"].lower()
         if mac == button_address:
-            last_pressed = timeout_guard[button_address]
-            guard_time = last_pressed + timedelta(seconds=int(button_timeout))
-            if current_time < guard_time:
-                logger.info("Packet captured from button " + button["name"] +
-                             " ignored during guard time of " + str(button_timeout) + "s ...")
-                return True
-            timeout_guard[button_address] = current_time
-
             logger.info(button["name"] + " button pressed!")
 
             url_request = ""
@@ -121,7 +113,6 @@ with open(path + "/data/options.json", mode="r") as data_file:
 # Check config parameters
 button_counter = 0
 error = False
-timeout_guard = {}
 
 for button in config["buttons"]:
     button_counter = button_counter + 1
