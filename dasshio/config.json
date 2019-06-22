@@ -1,6 +1,6 @@
 {
   "name": "Dasshio",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "slug": "dasshio",
   "description": "Use Amazon Dash Buttons in Home Assistant",
   "url": "https://github.com/namekal/dasshio",
@@ -17,7 +17,7 @@
   "homeassistant_api": true,
   "image": "namekal/{arch}-dasshio",
   "options": {
-    "request_timeout_secs": 0.5,
+    "request_timeout_secs": 2,
     "timeout": 10,
     "buttons": [
       {

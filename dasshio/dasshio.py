@@ -41,6 +41,7 @@ def arp_display(pkt):
     for button in config["buttons"]:
         button_address = button["address"].lower()
         if mac == button_address:
+            
             logger.info(button["name"] + " button pressed!")
 
             url_request = ""
@@ -71,7 +72,8 @@ def arp_display(pkt):
                 logger.info("Status Code: {}".format(request.status_code))
 
                 if request.status_code == requests.codes.ok:
-                    logger.info("Successful request")
+                    logger.info("Successful request, waiting " + str(button_timeout) + "s ...")
+    time.sleep(button_timeout)
                 else:
                     logger.error("Bad request")
             except:
