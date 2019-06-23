@@ -74,6 +74,7 @@ def arp_display(pkt):
                 if request.status_code == requests.codes.ok:
                     logger.info("Successful request, waiting " + str(button_timeout) + "s ...")
                     time.sleep(button_timeout)
+
                 else:
                     logger.error("Bad request")
             except:
